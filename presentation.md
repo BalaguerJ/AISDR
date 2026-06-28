@@ -13,7 +13,7 @@ style: |
     color: #ffffff;
     font-size: 3.2em;
     letter-spacing: -0.04em;
-    margin-bottom: 0.2em;
+    margin-bottom: 0.1em;
     font-weight: 800;
   }
   h2 {
@@ -21,17 +21,18 @@ style: |
     font-size: 2em;
     font-weight: 600;
     letter-spacing: -0.02em;
-    margin-bottom: 1em;
+    margin-bottom: 0.8em;
   }
   h3 {
     color: #a1a1aa;
     font-size: 1.4em;
     font-weight: 500;
+    margin-bottom: 0.8em;
   }
   p, li {
-    font-size: 1.2em;
+    font-size: 1.15em;
     color: #a1a1aa;
-    line-height: 1.6;
+    line-height: 1.45;
   }
   strong {
     color: #ffffff;
@@ -43,6 +44,12 @@ style: |
     background: linear-gradient(120deg, #3b82f6, #8b5cf6);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+  }
+  .note {
+    font-size: 0.85em;
+    margin-top: 1em;
+    color: #71717a;
+    font-style: italic;
   }
 ---
 
@@ -130,4 +137,4 @@ Powered by **Gemini** and structured prompt workflows.
 - **Review Pain Miner:** Finds customer pain points from public reviews.
 - **Revenue Leakage Score:** Prioritizes accounts based on public friction and intent signals.
 
-*Note: These agents are currently being validated and will supercharge our next version.*
+<p class="note">Note: These agents are currently being validated and will supercharge our next version.</p>
