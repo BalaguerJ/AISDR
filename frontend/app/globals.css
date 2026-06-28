@@ -1,0 +1,172 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-mono);
+}
+
+:root {
+  /* ━━ Neural Dark (Default / PRESTIGE BRILLIANCE) ━━━━━━━━━━━━━━ */
+  --bg-gradient: radial-gradient(ellipse at 50% 0%, #0a1d3f 0%, #040d21 45%, #020612 100%);
+  --foreground: #ffffff;
+  --text-primary: #ffffff;             /* Pure Brilliance */
+  --text-secondary: #E6E6E6;           /* High-contrast professional gray */
+  --text-dim: #A0A0A0;                 /* Professional Dim Gray (Logs) */
+  --text-muted: rgba(255, 255, 255, 0.4); /* Branded Metadata / Muted Agent */
+  
+  --glass-bg: rgba(255, 255, 255, 0.015);
+  --glass-border: rgba(255, 255, 255, 0.08); 
+  --card-shadow: 0 12px 48px rgba(0, 0, 0, 0.5);
+  
+  --accent-blue: #1565C0;
+  --accent-blue-hover: #1976D2;
+  
+  --input-bg: rgba(255, 255, 255, 0.03); /* Slightly increased for visibility */
+  --input-focus: rgba(255, 255, 255, 0.06);
+  --border-muted: rgba(255, 255, 255, 0.1);
+  color-scheme: dark;
+}
+
+.light-mode {
+  /* ━━ Refined Cream (Light Mode / HIGH CONTRAST) ━━━━━━━━━━━━━━━ */
+  --bg-gradient: radial-gradient(ellipse at 50% 0%, #fefcf8 0%, #fdfbf7 45%, #f7f4ef 100%);
+  --foreground: #000000;
+  --text-primary: #000000;
+  --text-secondary: #111111;
+  --text-dim: #444444;    /* High contrast dim gray for logs */
+  --text-muted: #666666;  /* metadata gray */
+  
+  --glass-bg: rgba(254, 252, 248, 0.95);
+  --glass-border: rgba(0, 0, 0, 0.15);
+  --card-shadow: 0 30px 60px rgba(0, 0, 0, 0.12);
+  
+  --accent-blue: #114B9E;  /* Deeper for light mode */
+  --accent-blue-hover: #0A3D80;
+  
+  --input-bg: rgba(0, 0, 0, 0.06);   /* Darkened for containment */
+  --input-focus: rgba(0, 0, 0, 0.1);
+  --border-muted: rgba(0, 0, 0, 0.15);
+  color-scheme: light;
+}
+
+html, body {
+  background: var(--bg-gradient) !important;
+  background-attachment: fixed !important;
+  color: var(--foreground);
+  font-family: var(--font-sans), sans-serif;
+  overflow-x: hidden;
+  transition: background 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ━━ Glassmorphism Utility ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid var(--glass-border);
+  border-radius: 1.25rem;
+  box-shadow: var(--card-shadow);
+  will-change: transform;
+  transform: translateZ(0);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ━━ Floating Apple Premium Scrollbar ━━━━━━━━━━━━━━━━━━━━━━━━━ */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-blue) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--accent-blue) !important;
+  border-radius: 20px;
+  border: 2px solid transparent; /* Creates the floating gutter */
+  background-clip: content-box;  /* Ensures thumb stays 4px within 8px gutter */
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-blue-hover) !important;
+}
+::-webkit-scrollbar-corner {
+  background: transparent !important;
+}
+
+/* ━━ Premium Card Hover ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.premium-card-hover {
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.premium-card-hover:hover {
+  transform: scale(1.01);
+  border-color: rgba(21, 101, 192, 0.4);
+  box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.25);
+}
+
+/* ━━ Apple iOS Vibrancy Glass Button ━━━━━━━━━━━━━━━━━━━━━━━━ */
+.ios-btn {
+  background: var(--glass-bg);
+  backdrop-filter: blur(40px) saturate(150%);
+  -webkit-backdrop-filter: blur(40px) saturate(150%);
+  border-radius: 1.25rem;
+  border: 1px solid var(--glass-border);
+  box-shadow: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  color: var(--text-primary);
+}
+
+.ios-btn:hover {
+  background: var(--accent-blue);
+  border-color: rgba(21, 101, 192, 0.4);
+  box-shadow: 0 10px 30px rgba(21, 101, 192, 0.3);
+  color: #ffffff !important;
+  transform: translateY(-1px);
+}
+
+/* ━━ Apple-style Stepper Buttons ━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.stepper-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.stepper-btn:hover {
+  background: #1565C0;
+  border-color: rgba(21, 101, 192, 0.4);
+  color: #ffffff;
+}
+
+/* ━━ Neural Pulse Animation (Heartbeat) ━━━━━━━━━━━━━━━━━━━━━━━ */
+@keyframes neural-pulse {
+  0% { transform: scale(0.92); box-shadow: 0 0 0 0 rgba(0, 230, 118, 0.4); }
+  50% { transform: scale(1.08); box-shadow: 0 0 20px 4px rgba(0, 230, 118, 0.6); }
+  100% { transform: scale(0.92); box-shadow: 0 0 0 0 rgba(0, 230, 118, 0.4); }
+}
+
+.animate-neural-pulse {
+  animation: neural-pulse 1.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* ━━ Global Spin Button Purge (Enforced) ━━━━━━━━━━━━━━━━━━━━━ */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0 !important;
+}
+
+input[type=number] {
+  -moz-appearance: textfield !important;
+}

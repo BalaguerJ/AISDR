@@ -54,6 +54,7 @@ frontend/.next/
 frontend/out/
 frontend/node_modules/
 whatsapp-gateway/node_modules/
+frontend/public/videos/*.mp4
 
 # OS Files
 .DS_Store
