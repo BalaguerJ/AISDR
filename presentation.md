@@ -72,6 +72,7 @@ An autonomous **GenAI Agentic System** that acts as an SDR.
 - **Discovers** highly-targeted leads automatically.
 - **Enriches** contact and business data dynamically.
 - **Generates** personalized outreach using Gemini.
+- **Classifies** incoming replies via Sentiment Analysis.
 - **Validates** everything through a human-in-the-loop CRM.
 
 ---
@@ -82,7 +83,8 @@ An autonomous **GenAI Agentic System** that acts as an SDR.
 1. **Hunt Agent:** Browser-based lead discovery from public sources.
 2. **Enrichment Agent:** Automatically extracts context and contact data.
 3. **Outreach Generator:** Creates contextualized drafts for Gmail & WhatsApp.
-4. **CRM Layer:** Preserves auditability, review status, and controlled human approval.
+4. **Inbound Agent:** Reads emails, runs sentiment analysis, and scores intent.
+5. **CRM Layer:** Preserves auditability and controlled human approval.
 
 ---
 
@@ -92,6 +94,7 @@ Powered by **Gemini** and structured prompt workflows.
 
 - **Tool-Use & Context:** Agents use enriched data for personalization.
 - **Channel Specific:** Tailors copy dynamically (Email vs. WhatsApp).
+- **Inbound Classification:** Labels replies as Hot, Warm, or Cold instantly.
 - **Guardrails:** Output validation and strict JSON schemas.
 - **Human Approval:** Nothing is sent without manual validation.
 
@@ -103,7 +106,8 @@ Powered by **Gemini** and structured prompt workflows.
 2. **Lead Enrichment:** See business data populate.
 3. **Draft Generation:** Gemini-based personalized outreach.
 4. **Channel Splits:** Separate Gmail and WhatsApp drafts.
-5. **CRM Review:** The human approval workflow.
+5. **Inbound Radar:** Watch AI classify live email replies.
+6. **CRM Review:** The human approval workflow.
 
 ---
 
