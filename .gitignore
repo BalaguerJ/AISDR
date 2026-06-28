@@ -1,0 +1,60 @@
+# Environments
+.env
+.env.*
+!.env.example
+venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+
+# Logs
+*.log
+backend/*.log
+frontend/*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Databases & States
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+backend/state/
+backend/agent_memory.db
+backend/agent_memory.db-shm
+backend/agent_memory.db-wal
+
+# Secrets & Results
+backend/results/*.csv
+backend/results/*.txt
+backend/results/*.json
+backend/campaigns/*.json
+backend/campaigns/*.corrupted
+
+# Additional root-level ignores for sensitive data
+leads_*
+*.csv
+*.xlsx
+*_campaign*
+*_leads*
+*_results*
+*_enriched*
+*_contacts*
+
+# Allow demo data
+!sample_data/demo_leads_sample.csv
+
+# Scratch and temp files
+backend/scratch/
+
+# Next.js
+frontend/.next/
+frontend/out/
+frontend/node_modules/
+whatsapp-gateway/node_modules/
+
+# OS Files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumen Ejecutivo - AI SDR Command Center (Roadmap 2026)</title>
+    
+    <!-- Google Fonts: Inter & Outfit -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Mermaid CDN for ER diagrams -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'neutral',
+            securityLevel: 'loose'
+        });
+    </script>
+    
+    <style>
+        /* Base Styling */
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1e293b;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f8fafc;
+        }
+        
+        .page-container {
+            max-width: 900px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            padding: 50px 60px;
+            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        /* Floating Instruction Banner for PDF creation */
+        .pdf-instruction-banner {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border: 1px solid #bbf7d0;
+            color: #14532d;
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 2px 8px rgba(22, 163, 74, 0.05);
+        }
+        
+        .pdf-instruction-banner kbd {
+            background-color: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-family: inherit;
+            font-size: 11px;
+            font-weight: 600;
+            box-shadow: 0 1px 0 rgba(0,0,0,0.1);
+        }
+        
+        /* Typographic System */
+        h1, h2, h3, h4 {
+            font-family: 'Outfit', sans-serif;
+            color: #0f172a;
+            font-weight: 700;
+            margin-top: 28px;
+            margin-bottom: 12px;
+        }
+        
+        h1 {
+            font-size: 32px;
+            font-weight: 800;
+            text-align: center;
+            color: #1e3a8a;
+            margin-top: 10px;
+            margin-bottom: 6px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            font-size: 16px;
+            color: #475569;
+            font-weight: 500;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 20px;
+        }
+        
+        h2 {
+            font-size: 22px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 8px;
+            margin-top: 40px;
+            color: #0f172a;
+        }
+        
+        h3 {
+            font-size: 17px;
+            color: #2563eb;
+            margin-top: 24px;
+        }
+        
+        p {
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+        
+        ul, ol {
+            margin-bottom: 16px;
+            padding-left: 24px;
+        }
+        
+        li {
+            margin-bottom: 6px;
+        }
+        
+        hr {
+            border: 0;
+            border-top: 2px solid #e2e8f0;
+            margin: 40px 0;
+        }
+        
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 13px;
+        }
+        
+        th, td {
+            border: 1px solid #cbd5e1;
+            padding: 10px 14px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f8fafc;
+            color: #0f172a;
+            font-weight: 600;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+        
+        /* Code & Preformatted */
+        pre, code {
+            font-family: monospace;
+            background-color: #f1f5f9;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-size: 12.5px;
+            color: #0f172a;
+        }
+        
+        pre {
+            padding: 12px;
+            overflow-x: auto;
+            border: 1px solid #e2e8f0;
+            margin: 16px 0;
+        }
+        
+        pre code {
+            background-color: transparent;
+            padding: 0;
+        }
+        
+        /* Blockquotes / Highlights */
+        blockquote {
+            border-left: 4px solid #2563eb;
+            background-color: #eff6ff;
+            margin: 18px 0;
+            padding: 14px 20px;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        blockquote p {
+            margin: 0;
+            font-style: italic;
+        }
+        
+        /* Centered Mermaid diagram container */
+        .mermaid {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+            background-color: #ffffff;
+            padding: 16px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        /* PRINT SPECIFIC STYLES - Triggers automatically during Print/Save-as-PDF */
+        @media print {
+            body {
+                background-color: #ffffff;
+                color: #000000;
+                font-size: 12pt;
+                margin: 0;
+                padding: 0;
+            }
+            
+            .page-container {
+                box-shadow: none;
+                border: none;
+                padding: 0;
+                margin: 0;
+                max-width: 100%;
+            }
+            
+            .pdf-instruction-banner {
+                display: none !important; /* Hide guidance banner on output PDF */
+            }
+            
+            h1, h2, h3, h4 {
+                page-break-after: avoid; /* Prevent headings sitting alone at bottom */
+            }
+            
+            hr {
+                page-break-after: always; /* Force page break on horizontal rules for section division */
+                border-top: 1px solid #cbd5e1;
+                margin: 30px 0;
+            }
+            
+            table, pre, blockquote, .mermaid {
+                page-break-inside: avoid; /* Avoid splitting tables or codes across pages */
+            }
+            
+            @page {
+                size: A4;
+                margin: 20mm;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        
+        <!-- Interactive Helper for PDF generation (hidden when printed) -->
+        <div class="pdf-instruction-banner">
+            <span>💾</span>
+            <div>
+                <strong>¿Cómo guardar este reporte como PDF?</strong> Presiona <kbd>Cmd</kbd> + <kbd>P</kbd> (o haz clic derecho y selecciona <strong>"Imprimir"</strong>), y en el destino selecciona <strong>"Guardar como PDF"</strong>. Este aviso desaparecerá automáticamente en el archivo PDF exportado.
+            </div>
+        </div>
+        
+        <!-- Header -->
+        <div style="text-align: center; margin-bottom: 20px;">
+            <span style="font-size: 11px; font-weight: 800; letter-spacing: 2px; color: #3b82f6; text-transform: uppercase;">Informe Estratégico</span>
+        </div>
+        <h1>AI SDR COMMAND CENTER</h1>
+        <div class="subtitle">Resumen Ejecutivo de Arquitectura y Roadmap de Evolución 2026</div>
+        
+        <!-- Main Content -->
+        <h1 id="resumen-ejecutivo-de-arquitectura-y-roadmap-de-evolucion-2026">Resumen Ejecutivo de Arquitectura y Roadmap de Evolución 2026</h1>
+<h2 id="proyecto-ai-sdr-command-center-agente-de-prospeccion-y-crm-inteligente">Proyecto: AI SDR Command Center (Agente de Prospección y CRM Inteligente)</h2>
+<p>Este documento ha sido preparado para servir de base en la planificación estratégica y técnica del año 2026. Analiza el estado actual de la plataforma, detalla la arquitectura de software basada en agentes autónomos, define los KPIs de negocio y de ingeniería, y propone un roadmap evolutivo para acelerar la adquisición de clientes de forma segura, escalable y monetizable.</p>
+<hr />
+<h2 id="1-vision-general-del-producto-y-propuesta-de-valor">1. Visión General del Producto y Propuesta de Valor</h2>
+<p>La plataforma es un <strong>SDR (Sales Development Representative) impulsado por IA</strong> de ciclo completo. Automatiza de extremo a extremo las tres fases de la captación B2B cold-outreach:
+1. <strong>Descubrimiento y Enriquecimiento Autónomo (Agente 1 - The Prospector):</strong> Localiza prospectos mediante scraping avanzado geolocalizado en Google Maps, portales web y YouTube. Extrae datos de contacto (emails directos, teléfonos, WhatsApp) con tácticas multicapa (crawling nativo de HTML, Footer parsing, enlaces <code>mailto:</code>, y renderizado dinámico con Playwright Chrome Headless).
+2. <strong>Generación y Envío de Campañas (Agente 2 - Campaign Manager):</strong> Califica el "fit" del lead con IA (scoring 1-100), redacta correos personalizados ultranaturales (evitando filtros de SPAM mediante Deliverability Hardening) y realiza entregas programadas distribuidas en el tiempo con "comportamiento humano" (jittering de tiempos, firmas y volumen).
+3. <strong>Monitoreo de Respuestas e Inbox Triage (Agente 3 - Inbound Intelligence):</strong> Escucha el buzón de entrada en tiempo real, asocia los correos recibidos con campañas/prospectos en la base de datos relacional, clasifica la intención de respuesta (8 tipos de etiquetas mediante IA) y ejecuta acciones deterministas instantáneas (pausar automatización ante leads interesados, procesar bajas/unsubscribes, añadir a listas de exclusión o registrar rebotes).</p>
+<hr />
+<h2 id="2-auditoria-tecnica-y-arquitectura-del-codigo">2. Auditoría Técnica y Arquitectura del Código</h2>
+<p>El sistema está estructurado bajo una arquitectura desacoplada que garantiza alta velocidad, robustez ante límites de APIs (RPM/TPM) y estabilidad en la entrega de emails:</p>
+<h3 id="a-componentes-del-backend-python-fastapi">A. Componentes del Backend (Python + FastAPI)</h3>
+<ul>
+<li><strong><code>main.py</code>:</strong> Orquestador de la API REST y servidor de WebSockets. Expone canales de comunicación bidireccional en tiempo real para la transmisión en streaming de logs de búsqueda y procesos de campañas hacia el frontend.</li>
+<li><strong><code>agents/ai_brain.py</code>:</strong> Capa cognitiva del sistema. Utiliza <strong>Google Gemini Flash</strong> (con rotación circular inteligente de múltiples API keys para evitar bloqueos y control dinámico de enfriamiento por cuotas). Deriva intenciones geográficas y formula consultas de búsqueda de alta diversidad a partir de instrucciones en lenguaje natural.</li>
+<li><strong><code>agents/extractor.py</code> &amp; <code>web_extractor.py</code>:</strong> Automatización de navegador usando Playwright Stealth para evadir detecciones antibot (Cloudflare, Google). Simula coordenadas geográficas (latitud, longitud, huso horario y locale) para simular presencia física local.</li>
+<li><strong><code>agents/enricher.py</code>:</strong> Crawler recursivo de sitios web. Descubre emails ocultos en código mediante expresiones regulares, rastreo de footers y navegación inteligente en subpáginas comunes (Contact, Legal, Impressum). Realiza un diagnóstico de salud técnica del sitio web del lead (velocidad de carga, adaptabilidad móvil y presencia de sistemas de reserva) para crear ganchos de venta personalizados.</li>
+<li><strong><code>agents/ingestor.py</code>:</strong> Pipeline seguro de importación de leads desde CSV. Ejecuta deduplicación jerárquica en tres niveles (Email -&gt; URL Maps/YouTube -&gt; Nombre + Teléfono) y autodetecta/categoriza la industria, ciudad y origen del lead a través de un motor de reglas heurístico (<code>rules_v1</code>).</li>
+<li><strong><code>agents/campaigns.py</code> &amp; <code>outreach_ai.py</code> &amp; <code>outreach_sender.py</code>:</strong> Cerebro de las campañas B2B. Implementa drip-scheduling basado en ventanas temporales de envío laboral humano. Cuenta con un escudo de reputación que detiene campañas en seco si detecta 3 fallos consecutivos en el servidor de correo SMTP. Soporta envío multicanal (Email y WhatsApp Meta Graph API).</li>
+<li><strong><code>agents/inbound/</code> (Listener, Normalizer, Matcher, Classifier, Router):</strong> Pipeline de ingestión de respuestas. Aplica una máquina de estados para los correos recibidos (<code>received -&gt; normalized -&gt; matched -&gt; classified -&gt; actioned -&gt; resolved</code>), clasificando el sentimiento y enrutándolo hacia una acción CRM instantánea.</li>
+</ul>
+<h3 id="b-base-de-datos-relacional-ledger-statecontactsdb-sqlite">B. Base de Datos Relacional Ledger (<code>state/contacts.db</code> - SQLite)</h3>
+<p>El sistema utiliza una base de datos SQLite optimizada en modo <strong>WAL (Write-Ahead Logging)</strong> para permitir lecturas y escrituras concurrentes de alta velocidad. El esquema cuenta con un sistema de inicialización autocurativo e incremento progresivo de versión (<code>user_version</code>). </p>
+<div class="codehilite"><pre><span></span><code>erDiagram
+    CONTACTS ||--o| LEAD_ENRICHMENT : &quot;has 1:1&quot;
+    CONTACTS ||--o{ CAMPAIGN_CONTACTS : &quot;participates in&quot;
+    CONTACTS ||--o{ OUTBOUND_MESSAGES : &quot;receives&quot;
+    CONTACTS ||--o{ INBOUND_MESSAGES : &quot;sends&quot;
+    CAMPAIGNS ||--o{ CAMPAIGN_CONTACTS : &quot;contains&quot;
+    CAMPAIGNS ||--o{ CONVERSATIONS : &quot;houses&quot;
+    CONVERSATIONS ||--o{ OUTBOUND_MESSAGES : &quot;contains&quot;
+    CONVERSATIONS ||--o{ INBOUND_MESSAGES : &quot;contains&quot;
+    INBOUND_MESSAGES ||--o| CLASSIFICATIONS : &quot;analyzed by&quot;
+    INBOUND_MESSAGES ||--o{ HUMAN_ADJUDICATIONS : &quot;reviewed in&quot;
+</code></pre></div>
+
+<h4 id="tablas-core-implementadas">Tablas Core Implementadas:</h4>
+<ol>
+<li><strong><code>contacts</code>:</strong> Registro maestro global de prospectos con estados (<code>active</code>, <code>suppressed</code>, <code>bounced</code>).</li>
+<li><strong><code>lead_enrichment</code>:</strong> Datos de inteligencia (tags de interés, sector inferido, país, ciudad, confianza de IA, y estado de enriquecimiento).</li>
+<li><strong><code>campaigns</code>:</strong> Catálogo de iniciativas de prospección con su pitch de ventas y estado operativo.</li>
+<li><strong><code>campaign_contacts</code>:</strong> Tabla pivote que controla el flujo individual del lead en una campaña (<code>pending_approval</code>, <code>sent</code>, <code>failed</code>, <code>paused</code>, <code>stopped</code>).</li>
+<li><strong><code>conversations</code>:</strong> Coordinación de hilos de mensajería unificados por canal (Email o WhatsApp).</li>
+<li><strong><code>outbound_messages</code> &amp; <code>inbound_messages</code>:</strong> Libros contables (ledgers) que registran cada interacción saliente y entrante con cabeceras de correlación RFC-Message-ID para trazabilidad exacta.</li>
+<li><strong><code>classifications</code>:</strong> Resultados del motor de IA que determinan intención (e.g., <code>interested_now</code>, <code>referral</code>, <code>not_interested</code>, <code>needs_info</code>) y nivel de confianza.</li>
+<li><strong><code>global_suppression_list</code>:</strong> Lista de exclusión automática para cumplimiento normativo (GDPR / CAN-SPAM).</li>
+<li><strong><code>action_events</code>:</strong> Registro de auditoría del sistema que documenta cada cambio de estado reactivo (ej. "Campaña pausada por respuesta detectada").</li>
+<li><strong><code>human_adjudications</code>:</strong> Historial de decisiones tomadas por un operador humano sobre clasificaciones de la IA (Retroalimentación del modelo).</li>
+</ol>
+<h3 id="c-componentes-del-frontend-nextjs-typescript">C. Componentes del Frontend (Next.js + TypeScript)</h3>
+<p>El panel visual está estructurado en una aplicación Next.js moderna con una interfaz premium de alto impacto visual (Glassmorphism, Modo Oscuro persistente, tipografía Geist y controles analíticos).
+* <strong>Control Center Central (<code>app/page.tsx</code>):</strong> Un tablero de control unificado de 130KB que expone cuatro paneles operacionales conmutables mediante <code>activeMode</code>:
+  1. <strong>Hunt Panel:</strong> Interfaz de control WebSocket para parametrizar búsquedas por objetivo comercial (Goal), límites de leads y tipo de raspado (Maps, Web, YouTube). Muestra un visor de logs fluidos simulando consolas tácticas de comando.
+  2. <strong>Outreach &amp; Campaign Manager:</strong> Vista interactiva de campañas activas. Permite cargar el Pitch, asociar archivos PDF/imágenes de contexto y revisar la cola de drafts personalizados generados por IA antes de autorizar el envío. Integra un panel modal interactivo (<code>CampaignSettings.tsx</code>) para la configuración micro-métrica del SDR (jittering, drip windows, SMTP).
+  3. <strong>Inbound Radar Feed:</strong> Centro de triage en tiempo real. Visualiza los correos entrantes clasificados por nivel de urgencia, muestra resúmenes de razonamiento de la IA y permite anular manualmente la clasificación mediante un botón de adjudicación rápida.
+  4. <strong>Intelligence CRM Dashboard:</strong> Grid interactivo que proporciona estadísticas globales (Tasa de contacto, tasa de respuesta, volumen de leads interesados, suppressions). Cuenta con buscadores predictivos, paginación y filtros multi-parámetro de leads por ciudad, industria, canal, estado global y estatus de enriquecimiento técnico.</p>
+<hr />
+<h2 id="3-motor-de-lead-intelligence-y-crm-de-seguridad-read-only-ledger">3. Motor de Lead Intelligence y CRM de Seguridad (Read-Only Ledger)</h2>
+<p>La plataforma incorpora una sofisticada capa de datos orientada a la seguridad operacional y al análisis contextualizado del prospecto, denominada <strong>Lead Intelligence CRM</strong>. Este componente unifica los datos de prospección externa, metadatos semánticos e históricos de mensajería en un único repositorio relacional estructurado.</p>
+<h3 id="a-filosofia-de-diseno-read-only-security-floor">A. Filosofía de Diseño: "Read-Only Security Floor"</h3>
+<p>Para garantizar la inmunidad absoluta del sistema ante escrituras concurrentes accidentales, inyecciones de código malicioso o desalineaciones provocadas por llamadas de agentes externos, todas las vistas operacionales de consulta en el panel web se comunican a través de <strong>Endpoints de Solo Lectura</strong>. </p>
+<p>Esta restricción de seguridad protege la base de datos <code>contacts.db</code> permitiendo realizar análisis exhaustivos, filtros multi-parámetro y consultas masivas en tiempo real con latencia mínima, asegurando al mismo tiempo la invariabilidad de la información del CRM.</p>
+<h3 id="b-ingesta-segura-y-auditoria-de-calidad-dry-run-reports">B. Ingesta Segura y Auditoría de Calidad (Dry-Run Reports)</h3>
+<p>El flujo de alimentación del CRM (<code>agents/ingestor.py</code>) está diseñado bajo estrictos principios de ingeniería de datos para procesar archivos CSV raspados:
+1. <strong>Fase de Análisis Predictivo (Dry-Run Preview):</strong> Lee los archivos en caliente en el directorio <code>/results</code> y genera una auditoría contextual del archivo sin ejecutar ninguna transacción de escritura física en la base de datos.
+2. <strong>Fórmula de Contactabilidad y Limpieza:</strong>
+   * <strong>Contactable Leads:</strong> Cuenta prospectos válidos que poseen email directo o teléfono.
+   * <strong>Email Contactable vs. Phone Contactable:</strong> Divide los prospectos según su canal óptimo de salida.
+   * <strong>Low Contactability Detection:</strong> Identifica de forma proactiva canales que presentan baja posibilidad de contacto (por ejemplo, canales de YouTube sin información pública de contacto directo).
+   * <strong>Placeholder Filtering:</strong> Limpia y anula automáticamente correos ficticios o inválidos (como <code>info@website.com</code>, <code>email@example.com</code> o dominios genéricos) contrastándolos con una lista negra de exclusión (<code>EMAIL_BLACKLIST</code>).
+3. <strong>Upsert Transaccional con Auto-Backup Preventivo:</strong> En el modo de ingesta real (<code>dry_run=False</code>), el pipeline crea un backup del archivo SQLite en caliente en el subdirectorio <code>/state</code>. Posteriormente, abre una transacción SQL segura y ejecuta una <strong>deduplicación en cascada en tres niveles</strong>:
+   * <strong>Tier 1:</strong> Validación por dirección de correo electrónico única.
+   * <strong>Tier 2:</strong> Validación por coincidencia exacta de URL de Google Maps o YouTube.
+   * <strong>Tier 3:</strong> Coincidencia combinada de Nombre Normalizado + Teléfono Sanitizado.
+   En caso de cualquier anomalía de base de datos durante el proceso, el orquestador ejecuta un <em>rollback</em> integral e instantáneo.</p>
+<h3 id="c-clasificacion-heuristica-y-local-rules_v1">C. Clasificación Heurística y Local (<code>rules_v1</code>)</h3>
+<p>Durante la ingesta, el procesador aplica un motor de reglas local eficiente (<code>infer_metadata</code>) que predice de forma autónoma el perfil comercial del lead a través de análisis de palabras clave y patrones textuales:
+* <strong>Sectorización Inteligente:</strong> Determina la industria primaria (ej. <code>Healthcare / Physiotherapy</code>, <code>Music Studio</code>, <code>Dance Academy</code>, <code>Restaurant / Hospitality</code>, <code>Nightlife / Club</code>) e infiere la subcategoría del negocio (ej. "Physiotherapy Clinic", "Recording Studio").
+* <strong>Triangulación Geográfica y Husos Horarios:</strong> Infiere automáticamente la ciudad (ej. <code>Palma de Mallorca</code>, <code>London</code>, <code>Madrid</code>, <code>Barcelona</code>) y el país analizando las direcciones físicas raspadas. Esto permite asignar de forma nativa husos horarios locales y planificar envíos futuros respetando la hora hábil local del destinatario.</p>
+<h3 id="d-endpoints-rest-de-lead-intelligence-crm">D. Endpoints REST de Lead Intelligence CRM</h3>
+<p>El backend expone endpoints de alto rendimiento optimizados para la visualización del CRM:
+* <strong><code>/api/crm/stats</code>:</strong> Calcula y actualiza en tiempo real las métricas globales del tablero: total de prospectos registrados, leads efectivamente contactados (con <code>touch_count &gt; 0</code>), tasa de respuesta consolidada, volumen de prospectos interesados (<code>interested_now</code>, <code>interested_later</code>, <code>needs_info</code>) y total de exclusiones de listas de SPAM.
+* <strong><code>/api/crm/leads</code>:</strong> Soporta paginación flexible y búsquedas predictivas indexadas sobre el correo, teléfono y nombre. Cuenta con un sistema de filtrado cruzado dinámico por Industria, Ciudad, Origen de Adquisición, Nivel de Enriquecimiento y Estatus Global del Lead.
+* <strong><code>/api/crm/leads/{lead_id}/timeline</code>:</strong> Reconstruye cronológicamente el historial conversacional unificado de la empresa. Asocia las interacciones salientes (<code>outbound_messages</code>) con los replies entrantes (<code>inbound_messages</code>), overlaying en la interfaz el nivel de confianza de la IA y la clasificación de sentimiento en un formato de chat intuitivo para el operador humano.</p>
+<hr />
+<h2 id="4-indicadores-clave-de-rendimiento-kpis-para-2026">4. Indicadores Clave de Rendimiento (KPIs) para 2026</h2>
+<p>Para evolucionar este software hacia una plataforma SaaS comercializable o para escalar su uso interno, proponemos medir y optimizar los siguientes KPIs estratégicos divididos en tres áreas:</p>
+<h3 id="a-kpis-operacionales-y-de-negocio-adquisicion-de-clientes">A. KPIs Operacionales y de Negocio (Adquisición de Clientes)</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">KPI</th>
+<th style="text-align: left;">Definición</th>
+<th style="text-align: left;">Meta 2026</th>
+<th style="text-align: left;">Impacto en el Negocio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>LCR (Lead Conversion Rate)</strong></td>
+<td style="text-align: left;">% de leads contactados que se convierten en citas o demos cualificadas.</td>
+<td style="text-align: left;"><strong>3.5% - 5.0%</strong></td>
+<td style="text-align: left;">Incrementa directamente el ROI de las campañas de marketing.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CAC (Customer Acquisition Cost)</strong></td>
+<td style="text-align: left;">Costo total de infraestructura + tokens IA para adquirir un cliente.</td>
+<td style="text-align: left;"><strong>&lt; $50 USD</strong></td>
+<td style="text-align: left;">Permite establecer precios competitivos y predecibles en la plataforma.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>LTV (Lifetime Value) / Churn</strong></td>
+<td style="text-align: left;">Retención de clientes SaaS que usan la plataforma mes a mes.</td>
+<td style="text-align: left;"><strong>Churn &lt; 4% mensual</strong></td>
+<td style="text-align: left;">Garantiza la sostenibilidad financiera a largo plazo.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Time-to-First-Value (TTFV)</strong></td>
+<td style="text-align: left;">Minutos transcurridos desde que el cliente escribe un "Goal" hasta que tiene sus primeros 50 drafts listos.</td>
+<td style="text-align: left;"><strong>&lt; 10 Minutos</strong></td>
+<td style="text-align: left;">Factor clave de "Efecto Wow" durante el onboarding del usuario.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="b-kpis-de-entregabilidad-y-reputacion-de-canales-outreach-security">B. KPIs de Entregabilidad y Reputación de Canales (Outreach Security)</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">KPI</th>
+<th style="text-align: left;">Definición</th>
+<th style="text-align: left;">Meta 2026</th>
+<th style="text-align: left;">Impacto en el Negocio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Reputation Deliverability Rate</strong></td>
+<td style="text-align: left;">% de correos enviados que aterrizan en la bandeja de entrada principal (no spam).</td>
+<td style="text-align: left;"><strong>&gt; 98.5%</strong></td>
+<td style="text-align: left;">Protege el dominio principal de los clientes de listas negras.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Bounce Rate</strong></td>
+<td style="text-align: left;">% de correos rechazados por direcciones inválidas.</td>
+<td style="text-align: left;"><strong>&lt; 2.0%</strong></td>
+<td style="text-align: left;">Mantiene alta reputación de la IP del remitente (gracias a Ingestor pre-validation).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Unsubscribe / Opt-Out Rate</strong></td>
+<td style="text-align: left;">% de prospectos que solicitan ser removidos del sistema.</td>
+<td style="text-align: left;"><strong>&lt; 1.0%</strong></td>
+<td style="text-align: left;">Asegura cumplimiento legal estricto bajo regulaciones internacionales.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="c-kpis-de-eficiencia-del-sistema-ingenieria-y-algoritmos">C. KPIs de Eficiencia del Sistema (Ingeniería y Algoritmos)</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">KPI</th>
+<th style="text-align: left;">Definición</th>
+<th style="text-align: left;">Meta 2026</th>
+<th style="text-align: left;">Impacto en el Negocio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Average Scraping Speed</strong></td>
+<td style="text-align: left;">Tiempo promedio consumido en decodificar y enriquecer un lead completo.</td>
+<td style="text-align: left;"><strong>&lt; 12 Segundos / Lead</strong></td>
+<td style="text-align: left;">Optimiza el uso de hilos concurrentes de Playwright Chromium.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Cost per 1,000 Enriched Leads</strong></td>
+<td style="text-align: left;">Costo monetario de tokens Gemini consumidos por cada mil prospectos enriquecidos.</td>
+<td style="text-align: left;"><strong>&lt; $0.50 USD</strong></td>
+<td style="text-align: left;">Permite márgenes brutos elevados en el modelo de negocio SaaS.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AI Classification Precision</strong></td>
+<td style="text-align: left;">Precisión de la clasificación neural de respuestas frente a overrides humanos.</td>
+<td style="text-align: left;"><strong>&gt; 94.0%</strong></td>
+<td style="text-align: left;">Minimiza la necesidad de revisión humana y maximiza la autonomía de triage.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="5-software-evolution-roadmap-2026">5. Software Evolution Roadmap 2026</h2>
+<p>Para convertir el actual MVP avanzado en una plataforma SaaS líder en prospección inteligente, dividimos el desarrollo del 2026 en cuatro fases de ejecución tecnológica:</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">2026</span><span class="w"> </span><span class="n">Roadmap</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">Q1</span><span class="p">:</span><span class="w"> </span><span class="n">Fase</span><span class="w"> </span><span class="mf">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Infraestructura</span><span class="w"> </span><span class="n">de</span><span class="w"> </span><span class="n">Escalabilidad</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="n">Multi</span><span class="o">-</span><span class="n">Identidad</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">Q2</span><span class="p">:</span><span class="w"> </span><span class="n">Fase</span><span class="w"> </span><span class="mf">2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Ultra</span><span class="o">-</span><span class="n">Personalización</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="nb">Int</span><span class="n">eligencia</span><span class="w"> </span><span class="n">Web</span><span class="w"> </span><span class="n">Audit</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">Q3</span><span class="p">:</span><span class="w"> </span><span class="n">Fase</span><span class="w"> </span><span class="mf">3</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Bandeja</span><span class="w"> </span><span class="n">de</span><span class="w"> </span><span class="n">Entrada</span><span class="w"> </span><span class="n">Unificada</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="n">Asistencia</span><span class="w"> </span><span class="n">Humana</span>
+<span class="err">└──</span><span class="w"> </span><span class="n">Q4</span><span class="p">:</span><span class="w"> </span><span class="n">Fase</span><span class="w"> </span><span class="mf">4</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Autonomía</span><span class="w"> </span><span class="n">de</span><span class="w"> </span><span class="n">Agente</span><span class="w"> </span><span class="n">Completo</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="n">Auto</span><span class="o">-</span><span class="n">Optimización</span>
+</code></pre></div>
+
+<h3 id="q1-fase-1-infraestructura-de-escalabilidad-y-multi-identidad">🚀 Q1 | Fase 1: Infraestructura de Escalabilidad y Multi-Identidad</h3>
+<ul>
+<li><strong>Objetivos:</strong> Permitir que múltiples usuarios corporativos utilicen la plataforma sin cruzar datos ni saturar cuentas SMTP.</li>
+<li><strong>Hitos de Desarrollo:</strong></li>
+<li><strong>Rotación y Warmup de SMTPs:</strong> Implementar un pool de cuentas de correo (ej., Gmail, Outlook, PrivateEmail) con rotación automática y calentamiento gradual (<em>warmup</em>) de volumen para evitar caídas de reputación.</li>
+<li><strong>Multi-Tenancy y Autenticación:</strong> Migrar la base de datos única SQLite a PostgreSQL con separación lógica de esquemas por usuario (<em>Tenant ID</em>) y sistema Auth0/Supabase para registro seguro.</li>
+<li><strong>Integración Nativa de API de WhatsApp:</strong> Expandir más allá de las credenciales fijas en <code>.env</code> permitiendo el onboarding del número de Meta Graph API del propio usuario mediante OAuth.</li>
+</ul>
+<h3 id="q2-fase-2-ultra-personalizacion-e-inteligencia-web-audit">🔍 Q2 | Fase 2: Ultra-Personalización e Inteligencia Web Audit</h3>
+<ul>
+<li><strong>Objetivos:</strong> Dotar a la IA de herramientas avanzadas para que sus mensajes fríos sean imposibles de distinguir de los de un redactor experto.</li>
+<li><strong>Hitos de Desarrollo:</strong></li>
+<li><strong>Integración con APIs Externas de Enriquecimiento (LinkedIn / Yelp):</strong> Ampliar el raspado de Google Maps hacia perfiles de LinkedIn de los fundadores/tomadores de decisión para incorporar hitos profesionales recientes en los drafts.</li>
+<li><strong>Auditoría Técnica Avanzada (Core Web Vitals):</strong> Potenciar el módulo de auditoría de sitios web actual en <code>enricher.py</code> para medir y documentar problemas de SEO, imágenes pesadas o falta de certificados de seguridad HTTPS, utilizando los datos técnicos como propuesta comercial.</li>
+<li><strong>Agente de Identificación de Stack Tecnológico:</strong> Detectar qué software (CMS, píxeles de tracking, analítica, CRMs) usa el lead en su sitio web para proponer mejoras u ofrecer consultorías específicas de integración.</li>
+</ul>
+<h3 id="q3-fase-3-bandeja-de-entrada-unificada-y-asistencia-humana-inbox-pro">📥 Q3 | Fase 3: Bandeja de Entrada Unificada y Asistencia Humana (Inbox Pro)</h3>
+<ul>
+<li><strong>Objetivos:</strong> Permitir la interacción bi-directional directamente desde el frontend sin salir de la plataforma.</li>
+<li><strong>Hitos de Desarrollo:</strong></li>
+<li><strong>Bandeja de Entrada Unificada (Unified Smart Inbox):</strong> Diseñar un chat unificado en la web donde se mezclen correos electrónicos y mensajes de WhatsApp en hilos cronológicos interactivos.</li>
+<li><strong>Respuestas Sugeridas por IA (AI Copilot Replies):</strong> Ante cualquier mensaje entrante clasificado como <code>interested_now</code> o <code>needs_info</code>, el sistema redactará automáticamente tres propuestas de respuesta adaptadas a la conversación actual para que el operador humano solo deba presionar "Aceptar y Enviar".</li>
+<li><strong>Editor de Correos con Editor Visual Rich Text (WYSIWYG):</strong> Permitir a los usuarios modificar manualmente los drafts de correos o las plantillas globales antes de la secuencia drip.</li>
+</ul>
+<h3 id="q4-fase-4-autonomia-de-agente-completo-y-auto-optimizacion">🧠 Q4 | Fase 4: Autonomía de Agente Completo y Auto-Optimización</h3>
+<ul>
+<li><strong>Objetivos:</strong> Convertir la plataforma en un piloto automático que detecte por sí mismo nuevos nichos y optimice la conversión de forma autónoma.</li>
+<li><strong>Hitos de Desarrollo:</strong></li>
+<li><strong>Agente Autoevaluador de Campañas (Feedback Loop):</strong> Un agente de IA que analiza periódicamente las tasas de apertura y respuesta de las plantillas actuales, propone variaciones semánticas (pruebas A/B automáticas) y deshabilita los enfoques de bajo rendimiento.</li>
+<li><strong>Descubrimiento Autónomo de Sectores:</strong> El usuario solo define "Quiero vender servicios de diseño web en Madrid" y el agente autogenera combinaciones de búsquedas, audita la calidad inicial de los leads, inicia las secuencias de campañas y presenta reportes mensuales con las reuniones conseguidas sin intervención humana.</li>
+<li><strong>Predicción Financiera de ROI:</strong> Panel analítico que calcula el retorno de inversión cruzando el costo de tokens de IA consumidos frente al volumen financiero de citas concretadas en el embudo de ventas.</li>
+</ul>
+<hr />
+<h2 id="6-estrategia-de-adquisicion-de-clientes-y-comercializacion">6. Estrategia de Adquisición de Clientes y Comercialización</h2>
+<p>Para rentabilizar y desplegar este software de inmediato, se proponen tres modelos de negocio escalables de adquisición de mercado:</p>
+<h3 id="a-modelo-saas-self-serve-product-led-growth">A. Modelo SaaS "Self-Serve" (Product-Led Growth)</h3>
+<ul>
+<li><strong>Público Objetivo:</strong> Agencias de marketing pequeñas, freelancers, consultores B2B, estudios de diseño y startups de software.</li>
+<li><strong>Mecánica:</strong> Registro autogestionado en la web con un tier de entrada gratuito que permite realizar 25 enriquecimientos y envíos.</li>
+<li><strong>Estructura de Precios:</strong></li>
+<li><strong>Tier Basic ($29 USD/mes):</strong> Hasta 500 prospectos enriquecidos y 1 cuenta de email conectada.</li>
+<li><strong>Tier Growth ($79 USD/mes):</strong> Hasta 2,500 prospectos enriquecidos al mes, 3 cuentas de email, auditoría técnica avanzada habilitada y templates dinámicos.</li>
+<li><strong>Tier Pro ($149 USD/mes):</strong> Enriquecimiento de leads ilimitado (sujeto a políticas de uso justo), 10 cuentas de email SMTP, API de WhatsApp conectada y triage automatizado inteligente.</li>
+</ul>
+<h3 id="b-modelo-done-for-you-agencia-de-generacion-de-leads-premium">B. Modelo "Done-For-You" (Agencia de Generación de Leads Premium)</h3>
+<ul>
+<li><strong>Público Objetivo:</strong> Empresas medianas y corporativos B2B que venden tickets altos ($2,000+ USD) y no tienen tiempo para operar software.</li>
+<li><strong>Mecánica:</strong> Se comercializa como un servicio mensual llave en mano operado por el equipo fundador. Nosotros configuramos las búsquedas tácticas, pulimos el pitch y les entregamos semanalmente una agenda llena de llamadas comerciales con leads interesados (<code>interested_now</code> listos para cierre).</li>
+<li><strong>Estructura de Precios:</strong> Retenedor fijo de <strong>$500 USD a $1,500 USD/mes + comisión por cita concretada</strong>. Este modelo financia directamente la infraestructura cloud y el desarrollo del software.</li>
+</ul>
+<h3 id="c-modelo-enriquecimiento-en-lote-para-listas-propias-data-enrichment-as-a-service">C. Modelo "Enriquecimiento en Lote" para Listas Propias (Data Enrichment-as-a-Service)</h3>
+<ul>
+<li><strong>Público Objetivo:</strong> Equipos de ventas que ya tienen una base de datos propia de emails, pero no conocen detalles contextuales de sus leads, la velocidad de carga de sus webs o si sus teléfonos son WhatsApps válidos.</li>
+<li><strong>Mecánica:</strong> Los clientes cargan su base de datos "sucia" o incompleta y el motor de enriquecimiento autónomo les entrega en minutos una versión optimizada, con tags de industria válidos, emails verificados, números limpios y descripciones personalizadas de cada empresa listos para sus propios sistemas CRM (Salesforce, HubSpot, etc.).</li>
+<li><strong>Estructura de Precios:</strong> Cobro por volumen consumido mediante créditos (ej., <strong>$0.05 USD por lead enriquecido con éxito</strong>).</li>
+</ul>
+<hr />
+<h2 id="conclusiones-tecnicas-para-el-roadmap">Conclusiones Técnicas para el Roadmap</h2>
+<p>El proyecto posee una <strong>base sólida de ingeniería limpia</strong>. La separación estricta de las tareas de prospección, envío inteligente y radar de inbox permite un control milimétrico sobre la reputación del remitente y asegura escalabilidad sin incurrir en cuellos de botella de latencia de red. </p>
+<p>Adoptar este roadmap colocará a la empresa a la vanguardia de las soluciones automatizadas de ventas y permitirá capturar una porción significativa del mercado SaaS B2B en el año 2026.</p>
+        
+    </div>
+</body>
+</html>

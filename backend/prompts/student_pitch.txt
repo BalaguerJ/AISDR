@@ -1,0 +1,18 @@
+Hola {name},
+
+Soy Jaume, estudiante del máster de Business Analytics en IE University.
+
+Estoy trabajando en un proyecto aplicado sobre digitalización y mejora del proceso de consulta en clínicas dentales, y estoy seleccionando pocas clínicas para prepararles una propuesta visual personalizada.
+
+He estado revisando vuestra presencia online y creo que {name} podría ser un caso interesante.
+
+La idea sería preparar en 48 horas un prototipo privado aplicado a vuestra clínica: una estructura web más clara, un flujo de contacto/reserva más directo y una forma más sencilla de resolver dudas frecuentes antes de pedir cita.
+
+No necesitaría accesos ni compromiso por vuestra parte. Os lo enseñaría en una llamada breve para que veáis cómo podría quedar aplicado a vuestro caso.
+
+Si os encaja, podríamos valorar la implementación con condiciones especiales por formar parte de esta primera selección.
+
+¿Os vendría bien verlo esta semana?
+
+Un saludo,
+Jaume

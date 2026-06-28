@@ -1,0 +1,14 @@
+playwright
+playwright-stealth
+beautifulsoup4
+requests
+pandas
+google-generativeai
+python-dotenv
+websockets
+fastapi
+uvicorn
+pydantic
+aiosmtplib
+httpx
+python-multipart

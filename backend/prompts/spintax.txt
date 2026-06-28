@@ -1,0 +1,4 @@
+Proyecto aplicado para {name}
+Idea rápida para {name}
+Prototipo digital para {name}
+Duda rápida sobre vuestra clínica
