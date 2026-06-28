@@ -9,6 +9,9 @@ import asyncio
 from datetime import datetime
 import pandas as pd
 
+RE_ALPHANUM = re.compile(r'[^a-z0-9]')
+RE_NON_DIGIT = re.compile(r'[^0-9]')
+
 # Define absolute paths
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RESULTS_DIR = os.path.join(BASE_DIR, "results")
@@ -195,7 +198,7 @@ def _infer_metadata_heuristic(row: dict, filename: str) -> dict:
     }
 
 
-def infer_metadata(row: dict, filename: str) -> dict:
+def infer_metadata(row: dict, filename: str, skip_ai: bool = False) -> dict:
     """
     Smart classifier (rules_v2 + AI fallback).
     First tries the fast keyword heuristic. If industry or city remain
@@ -206,6 +209,9 @@ def infer_metadata(row: dict, filename: str) -> dict:
 
     # If both are already classified, return immediately (no AI cost)
     if result["industry"] != "Unclassified" and result["city"] != "Unknown":
+        return result
+        
+    if skip_ai:
         return result
 
     # AI fallback for unclassified leads
@@ -454,16 +460,18 @@ def analyze_csv_for_preview(csv_path: str, existing_emails: set, existing_maps: 
     df = df.fillna("")
     rows = df.to_dict("records")
     
-    # Keep track of local duplicates inside this file to avoid double-counting
+    # Check track of local duplicates inside this file to avoid double-counting
     local_emails = set()
     local_maps = set()
     local_names_phones = set()
 
-    industries_list = []
-    cities_list = []
-    sources_list = []
-    
     sample_leads = []
+    
+    # Infer metadata once for the whole file based on the first row
+    sample_meta = infer_metadata(rows[0] if rows else {}, filename, skip_ai=True)
+    report["inferred_industry"] = sample_meta["industry"]
+    report["inferred_city"] = sample_meta["city"]
+    report["inferred_source"] = sample_meta["acquisition_source"]
 
     for i, row in enumerate(rows):
         raw_name = clean_text(row.get("name"))
@@ -471,12 +479,6 @@ def analyze_csv_for_preview(csv_path: str, existing_emails: set, existing_maps: 
         raw_phone = clean_phone(row.get("phone"))
         raw_map_url = clean_text(row.get("map_url"))
         raw_website = clean_text(row.get("website"))
-        
-        # Inferred Metadata
-        meta = infer_metadata(row, filename)
-        industries_list.append(meta["industry"])
-        cities_list.append(meta["city"])
-        sources_list.append(meta["acquisition_source"])
         
         # Detect if email is a placeholder
         is_placeholder = False
@@ -534,8 +536,8 @@ def analyze_csv_for_preview(csv_path: str, existing_emails: set, existing_maps: 
                 
         # Tier 3: Name + Phone check
         elif raw_name and has_phone:
-            norm_name = re.sub(r'[^a-z0-9]', '', raw_name.lower())
-            norm_phone = re.sub(r'[^0-9]', '', raw_phone)
+            norm_name = RE_ALPHANUM.sub('', raw_name.lower())
+            norm_phone = RE_NON_DIGIT.sub('', raw_phone)
             pair = (norm_name, norm_phone)
             if pair in existing_names_phones or pair in local_names_phones:
                 is_duplicate = True
@@ -563,23 +565,15 @@ def analyze_csv_for_preview(csv_path: str, existing_emails: set, existing_maps: 
                 "email": raw_email or ("Placeholder" if is_placeholder else "None"),
                 "phone": raw_phone or "None",
                 "website": raw_website or "None",
-                "inferred_industry": meta["industry"],
-                "inferred_city": meta["city"],
-                "inferred_source": meta["acquisition_source"],
+                "inferred_industry": sample_meta["industry"],
+                "inferred_city": sample_meta["city"],
+                "inferred_source": sample_meta["acquisition_source"],
                 "is_duplicate_estimate": is_duplicate,
                 "is_contactable": is_contactable,
                 "inferred_tags": tags
             })
 
     report["sample_leads"] = sample_leads
-
-    # Compute majorities
-    if industries_list:
-        report["inferred_industry"] = pd.Series(industries_list).value_counts().index[0]
-    if cities_list:
-        report["inferred_city"] = pd.Series(cities_list).value_counts().index[0]
-    if sources_list:
-        report["inferred_source"] = pd.Series(sources_list).value_counts().index[0]
 
     # Percentage warnings
     unusable_leads = report["total_rows"] - report["contactable_leads"] - report["website_only_leads"] - report["estimated_duplicates"]
@@ -613,8 +607,8 @@ def get_db_existings() -> tuple[set, set, set]:
             
         cursor.execute("SELECT name, phone FROM contacts WHERE name IS NOT NULL AND phone IS NOT NULL")
         for row in cursor.fetchall():
-            norm_name = re.sub(r'[^a-z0-9]', '', row[0].lower())
-            norm_phone = re.sub(r'[^0-9]', '', row[1])
+            norm_name = RE_ALPHANUM.sub('', row[0].lower())
+            norm_phone = RE_NON_DIGIT.sub('', row[1])
             names_phones.add((norm_name, norm_phone))
             
         conn.close()
@@ -859,8 +853,8 @@ def execute_ingest_pipeline(filename: str = "all", dry_run: bool = True, limit: 
                     session_maps.add(clean_map)
                     
             elif clean_name and has_phone:
-                norm_name = re.sub(r'[^a-z0-9]', '', clean_name.lower())
-                norm_phone = re.sub(r'[^0-9]', '', clean_phone_val)
+                norm_name = RE_ALPHANUM.sub('', clean_name.lower())
+                norm_phone = RE_NON_DIGIT.sub('', clean_phone_val)
                 pair = (norm_name, norm_phone)
                 if pair in existing_names_phones or pair in session_names_phones:
                     is_duplicate = True
@@ -1000,8 +994,8 @@ def execute_ingest_pipeline(filename: str = "all", dry_run: bool = True, limit: 
                 cursor.execute("SELECT id, name, phone FROM contacts WHERE phone = ?", (clean_phone_val,))
                 for row in cursor.fetchall():
                     ex_name = row[1]
-                    norm_ex = re.sub(r'[^a-z0-9]', '', ex_name.lower())
-                    norm_new = re.sub(r'[^a-z0-9]', '', clean_name.lower())
+                    norm_ex = RE_ALPHANUM.sub('', ex_name.lower())
+                    norm_new = RE_ALPHANUM.sub('', clean_name.lower())
                     if norm_ex == norm_new:
                         contact_id = row[0]
                         break
