@@ -70,6 +70,11 @@ B2B sales teams are wasting time on manual labor.
 - **Copywriting:** Writing personalized outreach from scratch.
 - **Result:** Sales teams spend a significant amount of time manually finding leads and writing outreach.
 
+<!--
+Speaker Notes:
+The MVP I built addresses this by reducing manual work through an autonomous agentic workflow.
+-->
+
 ---
 
 # Our Solution
@@ -113,8 +118,13 @@ Powered by **Gemini** and structured prompt workflows.
 2. **Lead Enrichment:** See business data populate.
 3. **Draft Generation:** Gemini-based personalized outreach.
 4. **Channel Splits:** Separate Gmail and WhatsApp drafts.
-5. **Inbound Radar:** Watch AI classify live email replies.
+5. **Inbound Radar:** Watch the Inbound Agent classify incoming replies and prioritize hot leads.
 6. **CRM Review:** The human approval workflow.
+
+<!--
+Speaker Notes:
+Now I’ll switch from the slides to the actual MVP, so you can see the workflow end to end: from lead discovery, to enrichment, to Gemini-generated outreach, to inbound classification and CRM review.
+-->
 
 ---
 
@@ -138,3 +148,8 @@ Powered by **Gemini** and structured prompt workflows.
 - **Revenue Leakage Score:** Prioritizes accounts based on public friction and intent signals.
 
 <p class="note">Note: These agents are currently being validated and will supercharge our next version.</p>
+
+<!--
+Speaker Notes:
+So the key idea is that this is not just an email generator. It is a closed-loop AI SDR workflow: discovery, enrichment, personalized outreach, inbound classification, and human-controlled CRM execution. Thank you.
+-->
